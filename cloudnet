@@ -1,0 +1,26 @@
+module.exports = {
+    *beforeSendResponse(requestDetail, responseDetail)
+{
+    console.log(requestDetail.url);
+
+    if (requestDetail.url.indexOf('mobile/discovery/v2/category/metadata/albums/ts-') > 0) {
+        const newResponse = responseDetail.response;
+        var bodyjson=JSON.parse(newResponse.body);
+        // console.log(typeof newResponse.body);
+        // console.log(bodyjson);
+        var alumindex;
+        for(alumindex in bodyjson.list){
+            var alum=bodyjson.list[alumindex];
+            console.log(alum.albumId);
+            console.log(alum.title);
+        }
+//注释掉的代码是用来redis保存数据的
+        // var redis = require('redis');
+        // var client = redis.createClient();
+        // client.sadd(['testximalaya',newResponse.body],function (err, reply) {
+        //     console.log(reply);
+        // });
+        return null;
+    }
+}
+};
